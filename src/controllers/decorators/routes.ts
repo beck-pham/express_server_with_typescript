@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Methods } from './Methods';
-import { MetadataKeys } from './MetaDataKeys';
+import { MetadataKeys } from './MetadataKeys';
 
 function routerBinder(method: string) {
   // factory decorator - A decorator that return a function

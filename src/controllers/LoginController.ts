@@ -1,10 +1,14 @@
-import { Request, Response } from 'express';
-import { get, controller } from './decorators';
+import { NextFunction, Request, Response } from 'express';
+import { get, controller, use } from './decorators';
 
+function logger (req: Request, res: Response, next: NextFunction) {
+  console.log('Request was made!');
+}
 
 @controller('/auth') // decorator that take all the routing info and merge it altogether on some route 
 class Logincontroller {
   @get('/login')
+  @use(logger)
   getLogin(req: Request, res: Response): void {
     res.send(`
       <form method="POST">

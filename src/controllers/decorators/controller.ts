@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { AppRouter } from '../../AppRouter';
 import { Methods } from './Methods';
-import { MetadataKeys } from './MetaDataKeys';
+import { MetadataKeys } from './MetadataKeys';
 
 export function controller(routePrefix: string) {
   return function(target: Function) {

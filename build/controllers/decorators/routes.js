@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.patch = exports.del = exports.put = exports.post = exports.get = void 0;
 require("reflect-metadata");
 var Methods_1 = require("./Methods");
-var MetaDataKeys_1 = require("./MetaDataKeys");
+var MetadataKeys_1 = require("./MetadataKeys");
 function routerBinder(method) {
     // factory decorator - A decorator that return a function
     return function (path) {
         return function (target, key, desc) {
-            Reflect.defineMetadata(MetaDataKeys_1.MetadataKeys.path, path, target, key);
-            Reflect.defineMetadata(MetaDataKeys_1.MetadataKeys.method, method, target, key);
+            Reflect.defineMetadata(MetadataKeys_1.MetadataKeys.path, path, target, key);
+            Reflect.defineMetadata(MetadataKeys_1.MetadataKeys.method, method, target, key);
         };
     };
 }
