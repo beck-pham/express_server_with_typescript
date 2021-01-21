@@ -18,7 +18,7 @@ function controller(routePrefix) {
             var routeHandler = target.prototype[key];
             var path = Reflect.getMetadata(MetaDataKeys_1.MetadataKeys.path, target.prototype, key);
             var method = Reflect.getMetadata(MetaDataKeys_1.MetadataKeys.method, target.prototype, key);
-            var middlewares = Reflect.getMetadata(MetaDataKeys_1.MetadataKeys.middleware, target, key) || [];
+            var middlewares = Reflect.getMetadata(MetaDataKeys_1.MetadataKeys.middleware, target.prototype, key) || [];
             // only attempt to associate a route handler with the router if we have successfully found a path property
             if (path) {
                 router[method].apply(router, __spreadArrays(["" + routePrefix + path], middlewares, [routeHandler]));
