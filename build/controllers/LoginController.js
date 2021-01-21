@@ -33,6 +33,10 @@ var Logincontroller = /** @class */ (function () {
             res.send('Invalid email or password');
         }
     };
+    Logincontroller.prototype.getLogout = function (req, res) {
+        req.session = undefined;
+        res.redirect('/');
+    };
     __decorate([
         decorators_1.get('/login'),
         decorators_1.use(logger),
@@ -47,6 +51,12 @@ var Logincontroller = /** @class */ (function () {
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], Logincontroller.prototype, "postLogin", null);
+    __decorate([
+        decorators_1.get('/logout'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", void 0)
+    ], Logincontroller.prototype, "getLogout", null);
     Logincontroller = __decorate([
         decorators_1.controller('/auth') // decorator that take all the routing info and merge it altogether on some route 
     ], Logincontroller);
