@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { get, controller, use } from './decorators';
+import { get, controller, use , validatorKey, post} from './decorators';
 
 function logger (req: Request, res: Response, next: NextFunction) {
   console.log('Request was made!');
+  next();
 }
 
 @controller('/auth') // decorator that take all the routing info and merge it altogether on some route 
@@ -24,4 +25,20 @@ class Logincontroller {
       </form>
     `)
   };
+
+  @post('/login')
+  @validatorKey('email', 'password')
+  postLogin(req: Request, res: Response) {
+    const { email, password } = req.body;
+  
+    //type guard
+    if(email === 'admin@admin.com' && password === 'password123' ) {
+      // using cookie session
+      req.session = { loggedIn: true }
+      res.redirect('/');
+    } else {
+      res.send('Invalid email or password');
+    }
+  }
 }
+

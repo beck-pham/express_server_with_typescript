@@ -11,6 +11,25 @@ exports.controller = void 0;
 require("reflect-metadata");
 var AppRouter_1 = require("../../AppRouter");
 var MetadataKeys_1 = require("./MetadataKeys");
+function bodyValidators(keys) {
+    return function (req, res, next) {
+        // check any keys in the req.body that exist
+        // If there aren't any, response with an error,
+        // Else, call the next function
+        if (!req.body) {
+            res.status(422).send('Invalid request');
+            return;
+        }
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var key = keys_1[_i];
+            if (!req.body[key]) {
+                res.status(422).send("Missing property " + key);
+                return;
+            }
+        }
+        next();
+    };
+}
 function controller(routePrefix) {
     return function (target) {
         var router = AppRouter_1.AppRouter.getInstance();
@@ -19,9 +38,11 @@ function controller(routePrefix) {
             var path = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.path, target.prototype, key);
             var method = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.method, target.prototype, key);
             var middlewares = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.middleware, target.prototype, key) || [];
+            var requireBodyProps = Reflect.getMetadata(MetadataKeys_1.MetadataKeys.validator, target.prototype, key) || [];
+            var validator = bodyValidators(requireBodyProps);
             // only attempt to associate a route handler with the router if we have successfully found a path property
             if (path) {
-                router[method].apply(router, __spreadArrays(["" + routePrefix + path], middlewares, [routeHandler]));
+                router[method].apply(router, __spreadArrays(["" + routePrefix + path], middlewares, [validator, routeHandler]));
             }
         }
     };
